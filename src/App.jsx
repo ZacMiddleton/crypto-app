@@ -15,6 +15,7 @@ import { CurrencySelect } from "./components/CurrencySelect";
 import { ThemeProvider } from "styled-components";
 import { darkTheme, lightTheme } from "./utils/theme";
 import { AppContainer, MainNav, NavContainer } from "./App.Styles";
+import NavMarketData from "./components/NavMarketData";
 
 const Root = (props) => {
   const { toggleTheme, theme } = props;
@@ -28,6 +29,7 @@ const Root = (props) => {
           <CurrencySelect />
           <button onClick={toggleTheme}>{theme}</button>
         </MainNav>
+        <NavMarketData />
       </NavContainer>
 
       <div>
