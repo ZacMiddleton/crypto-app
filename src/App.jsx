@@ -1,35 +1,69 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  Link,
+  Outlet,
+  RouterProvider,
+} from "react-router-dom";
+import "./App.css";
+import Coins from "./pages/Coins/Coins";
+import Portfolio from "./pages/Portfolio/Portfolio";
+import { SearchInput } from "./components/SearchInput";
+import { CurrencySelect } from "./components/CurrencySelect";
+import { ThemeProvider } from "styled-components";
+import { darkTheme, lightTheme } from "./utils/theme";
+import { AppContainer, MainNav, NavContainer } from "./App.Styles";
+
+const Root = (props) => {
+  const { toggleTheme, theme } = props;
+  return (
+    <>
+      <NavContainer>
+        <MainNav>
+          <Link to="/">Coins</Link>
+          <Link to="/Portfolio">Portfolio</Link>
+          <SearchInput />
+          <CurrencySelect />
+          <button onClick={toggleTheme}>{theme}</button>
+        </MainNav>
+      </NavContainer>
+
+      <div>
+        <Outlet />
+      </div>
+    </>
+  );
+};
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [theme, setTheme] = useState("dark");
+
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+    console.log("clicked");
+  };
+
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route
+        path="/"
+        element={<Root theme={theme} toggleTheme={toggleTheme} />}
+      >
+        <Route index path="/" element={<Coins />} />
+        <Route path="/Portfolio" element={<Portfolio />} />
+      </Route>
+    )
+  );
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+    <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+      <AppContainer>
+        <RouterProvider router={router} />
+      </AppContainer>
+    </ThemeProvider>
+  );
 }
 
-export default App
+export default App;
