@@ -36,7 +36,7 @@ const Root = (props) => {
         <Outlet />
       </div>
     </>
-  );
+  );``
 };
 
 function App() {
