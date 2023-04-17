@@ -7,8 +7,8 @@ export const lightTheme = {
   };
 
  export const darkTheme =  {
-      primary: "#FFFFFF",
-      secondary: "#FCFCFC",
+       primary: "#FCFCFC",
+      secondary: "#FFFFFF",
       tertiary: "#DCDCDC",
       text: "#2C3038",
 };

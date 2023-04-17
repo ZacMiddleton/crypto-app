@@ -58,7 +58,7 @@ function CryptoTable({ coinData }) {
     "#4281a4",
     "#9cafb7",
     "#ead2ac",
-    "#2C5530",
+    "#F26419",
     "#51E5FF",
   ];
 
