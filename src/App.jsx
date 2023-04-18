@@ -15,7 +15,7 @@ import { CurrencySelect } from "./components/CurrencySelect";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyles } from "./GlobalStyles";
 import { darkTheme, lightTheme } from "./utils/theme";
-import { AppContainer, MainNav, NavContainer, Wrapper } from "./App.Styles";
+import { AppContainer, MainNav, NavContainer, Wrapper, StyledDiv, StyledLink} from "./App.Styles";
 import NavMarketData from "./components/NavMarketData"
 
 
@@ -25,11 +25,15 @@ const Root = (props) => {
     <>
       <NavContainer>
         <MainNav>
-          <Link to="/">Coins</Link>
-          <Link to="/Portfolio">Portfolio</Link>
-          <SearchInput />
-          <CurrencySelect />
-          <button onClick={toggleTheme}>{theme}</button>
+          <div>
+            <StyledLink to="/">Coins</StyledLink>
+            <StyledLink to="/Portfolio">Portfolio</StyledLink>
+          </div>
+          <StyledDiv>
+            <SearchInput />
+            <CurrencySelect />
+            <button onClick={toggleTheme}>{theme}</button>
+          </StyledDiv>
         </MainNav>
         <NavMarketData />
       </NavContainer>

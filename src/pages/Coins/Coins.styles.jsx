@@ -9,7 +9,7 @@ export const Container = styled.div`
 
 export const BtcChartWrapper = styled.div `
     display: flex;
-    width: 100%;
+    width: calc(100% - 108px);
     color: ${(props) => {
         return props.theme.text;
     }};

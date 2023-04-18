@@ -87,7 +87,7 @@ const BarChart = ({ barData, coinData }) => {
           <h1>
             {coinData.map((item) => {
               if (item.id === "bitcoin") {
-                return formatNumber(item.total_volume);
+                return `$${formatNumber(item.total_volume)}`;
               }
             })}
           </h1>
