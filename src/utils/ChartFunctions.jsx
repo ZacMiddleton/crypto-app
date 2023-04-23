@@ -23,3 +23,22 @@ export const formatNumber = (number) => {
   
     return `${month} ${day}, ${year}`;
   };
+
+  export const currencySymbol = (value) => {
+    switch (value) {
+      case "USD":
+        return "$"
+      case "CAD":
+        return "$"
+      case "GBP":
+        return "£"
+      case "EUR":
+        return "€"
+      case "BTC":
+        return "₿"
+      case "ETH":
+        return "Ξ"
+      default:
+        return "$"
+    }
+  }

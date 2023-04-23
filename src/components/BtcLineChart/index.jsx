@@ -12,7 +12,7 @@ import {
 } from "chart.js";
 import "chart.js/auto";
 import { Container, ChartWrapper } from "./BtcLineChart.styles";
-import { getFormattedDate } from "/src/utils/ChartFunctions";
+import { getFormattedDate, currencySymbol } from "/src/utils/ChartFunctions";
 
 ChartJS.register(
   CategoryScale,
@@ -24,7 +24,7 @@ ChartJS.register(
   Legend
 );
 
-const LineChart = ({ lineData, coinData }) => {
+const LineChart = ({ lineData, coinData, currency }) => {
   const chartRef = useRef(null);
 
   const options = {
@@ -90,6 +90,10 @@ const LineChart = ({ lineData, coinData }) => {
     ],
   };
 
+  useEffect(() => {
+    console.log('Currency prop has changed:', currency);
+  }, [currency]);
+
   return (
     <ChartWrapper>
       <Container>
@@ -98,7 +102,7 @@ const LineChart = ({ lineData, coinData }) => {
           <h1>
             {coinData.map((item) => {
               if (item.id === "bitcoin") {
-                return `$${item.current_price.toLocaleString()}`;
+                return `${currencySymbol(currency)}${item.current_price.toLocaleString()}`;
               }
             })}
           </h1>

@@ -7,8 +7,8 @@ export function SearchInput() {
     }
 
     return (
-        <div>
-            <input type="text" value={inputValue} onChange={onChange}/>
-        </div>
+        <>
+            <input type="text" placeholder='Search...' value={inputValue} onChange={onChange}/>
+        </>
     )
 }
