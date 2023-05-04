@@ -90,10 +90,6 @@ const LineChart = ({ lineData, coinData, currency }) => {
     ],
   };
 
-  useEffect(() => {
-    console.log('Currency prop has changed:', currency);
-  }, [currency]);
-
   return (
     <ChartWrapper>
       <Container>
