@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { marketData, coinData } from "/src/utils/CoinGecko";
 import { Container, PercentContainer, Dot } from "./NavMarketData.styles";
-import { useLocalStorage } from "/src/utils/hooks";
 import { currencySymbol } from "/src/utils/ChartFunctions";
 
-function NavMarketData({ optionSelected }) {
+function NavMarketData({ optionSelected, coinData }) {
   const [cryptoData, setCryptoData] = useState(null);
   const [BTCData, setBTCData] = useState(null);
 
@@ -24,23 +23,15 @@ function NavMarketData({ optionSelected }) {
     setCryptoData(marketData);
   };
 
-  const getCoinData = (marketData) => {
-    setBTCData(marketData);
-  };
-
   useEffect(() => {
     marketData(getMarketData);
-    coinData(getCoinData, optionSelected);
-  }, []);
-
-  useEffect(() => {
-    coinData(getCoinData, optionSelected);
-  }, [optionSelected]);
+    setBTCData(coinData);
+  }, [coinData]);
 
   const { active_cryptocurrencies, markets, market_cap_percentage } =
     cryptoData?.data?.data ?? {};
 
-  const { total_volume, market_cap, image } = BTCData?.data[0] ?? {};
+    const { total_volume, market_cap, image } = BTCData ? BTCData[0] : {};
   const ethImage =
     "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880";
 

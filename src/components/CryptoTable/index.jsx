@@ -108,7 +108,7 @@ function CryptoTable({ coinData, currency, fetchData }) {
           label: "",
           data: sparklineData,
           borderColor:
-            item.price_change_percentage_7d_in_currency >= 0 ? "green" : "red",
+            item.price_change_percentage_7d_in_currency > 0 ? "green" : "red",
           backgroundColor:
             item.price_change_percentage_7d_in_currency > 0 ? "green" : "red",
           pointRadius: 0,
@@ -139,7 +139,7 @@ function CryptoTable({ coinData, currency, fetchData }) {
         <InfiniteScroll
           dataLength={coinData.length}
           next={fetchData}
-          scrollThreshold={1}
+          scrollThreshold={0.8}
           hasMore={true}
           loader={<h4>Loading...</h4>}
         >
@@ -148,7 +148,7 @@ function CryptoTable({ coinData, currency, fetchData }) {
             const colorTwo = colorGeneratorTwo[Math.floor(Math.random() * 4)];
             return (
               <ListItem key={item.id}>
-                <CoinTitle>
+                <CoinTitle to={`/coin/${item.id}`}>
                   <img src={item.image} alt="" />{" "}
                   {`${item.name} (${item.symbol.toUpperCase()})`}
                 </CoinTitle>
