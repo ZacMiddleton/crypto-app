@@ -3,24 +3,28 @@ import { InputWrapper, Container } from "./ConversionCalculator.styles";
 import { ConversionIcon } from "/src/assets/ThemeIcons";
 
 const ConversionCalculator = ({ currency, coinInfo }) => {
-  const { symbol } = coinInfo;
-  const { market_data } = coinInfo;
-  const { current_price } = market_data;
+  const { symbol, market_data: { current_price } } = coinInfo;
   let currencyAmount = current_price[currency.toLowerCase()];
   let coinAmount = currencyAmount / currencyAmount;
 
-  const [currencyInputValue, setCurrencyInputValue] = useState(current_price[currency.toLowerCase()]);
-  const [coinInputValue, setCoinInputValue] = useState(current_price[currency.toLowerCase()] / current_price[currency.toLowerCase()]);
+  const [currencyInputValue, setCurrencyInputValue] = useState(
+    current_price[currency.toLowerCase()]
+  );
+  const [coinInputValue, setCoinInputValue] = useState(
+    current_price[currency.toLowerCase()] /
+      current_price[currency.toLowerCase()]
+  );
+  const [isFlipped, setIsFlipped] = useState(false);
 
   const handleCurrencyInputChange = (e) => {
-    setCurrencyInputValue(e.target.value)
+    setCurrencyInputValue(e.target.value);
     handleCurrencyConversion(e.target.value);
-  }
+  };
 
   const handleCoinInputChange = (e) => {
-    setCoinInputValue(e.target.value)
+    setCoinInputValue(e.target.value);
     handleCoinConversion(e.target.value);
-  }
+  };
 
   const handleCurrencyConversion = (value) => {
     let coinValue = coinAmount / currencyAmount;
@@ -30,29 +34,69 @@ const ConversionCalculator = ({ currency, coinInfo }) => {
 
   const handleCoinConversion = (value) => {
     let sum = (currencyAmount * value).toFixed(2).toLocaleString();
-    setCurrencyInputValue(sum)
+    setCurrencyInputValue(sum);
+  };
+
+  const handleFlipped = () => {
+    setIsFlipped(prevIsFlipped => !prevIsFlipped);
   }
 
   useEffect(() => {
-    // handleCurrencyConversion(currencyInputValue);
     handleCoinConversion(coinInputValue);
   }, [currency]);
 
   return (
     <Container>
-      <InputWrapper>
-        <div>
-          <p>{currency}</p>
-        </div>
-        <input defaultValue={`${currencyAmount.toLocaleString()}`} onChange={handleCurrencyInputChange} value={currencyInputValue} type="number" />
-      </InputWrapper>
-      <ConversionIcon />
-      <InputWrapper>
-        <div>
-          <p>{symbol.toUpperCase()}</p>
-        </div>
-        <input defaultValue={`${coinAmount}`} onChange={handleCoinInputChange} value={coinInputValue} type="number" />
-      </InputWrapper>
+      {!isFlipped && (
+        <>
+          <InputWrapper>
+            <div>
+              <p>{currency}</p>
+            </div>
+            <input
+              onChange={handleCurrencyInputChange}
+              value={currencyInputValue}
+              type="number"
+            />
+          </InputWrapper>
+          <ConversionIcon onClick={handleFlipped} />
+          <InputWrapper>
+            <div>
+              <p>{symbol.toUpperCase()}</p>
+            </div>
+            <input
+              onChange={handleCoinInputChange}
+              value={coinInputValue}
+              type="number"
+            />
+          </InputWrapper>
+        </>
+      )}
+      {isFlipped && (
+        <>
+          <InputWrapper>
+            <div>
+              <p>{symbol.toUpperCase()}</p>
+            </div>
+            <input
+              onChange={handleCoinInputChange}
+              value={coinInputValue}
+              type="number"
+            />
+          </InputWrapper>
+          <ConversionIcon onClick={handleFlipped} />
+          <InputWrapper>
+            <div>
+              <p>{currency}</p>
+            </div>
+            <input
+              onChange={handleCurrencyInputChange}
+              value={currencyInputValue}
+              type="number"
+            />
+          </InputWrapper>
+        </>
+      )}
     </Container>
   );
 };

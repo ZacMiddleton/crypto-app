@@ -12,5 +12,6 @@ export const Wrapper = styled.div`
   background: ${(props) => {
     return props.theme.primary;
   }};
+  min-height: 100vh;
 `;
 

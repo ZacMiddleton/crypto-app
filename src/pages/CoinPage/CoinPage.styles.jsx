@@ -262,6 +262,7 @@ export const CopiedTextWrapper = styled.div`
   visibility: ${(props) => props.isCopied ? "visible" : "hidden"};
   top: 900px;
   z-index: 1;
+  color: #FFFFFF;
   svg {
     height: 20px;
     margin: 0 8px 0 0;

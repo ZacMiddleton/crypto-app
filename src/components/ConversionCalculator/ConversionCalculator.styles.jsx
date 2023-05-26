@@ -47,10 +47,10 @@ export const Container = styled.div`
   align-items: center;
   justify-content: space-between;
   margin: 0 auto;
-  padding-bottom: 20px;
   width: 50%;
   color: ${({ theme }) => theme.text};
   svg {
     height: 25px;
+    cursor: pointer;
   }
 `;
