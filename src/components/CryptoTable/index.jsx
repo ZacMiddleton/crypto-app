@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { connect } from 'react-redux';
 import { Line } from "react-chartjs-2";
 import PercentageBar from "/src/components/PercentageBar";
 import PercentageDisplay from "/src/components/PercentageDisplay";
@@ -214,4 +214,8 @@ function CryptoTable({ coinData, currency, fetchData }) {
   );
 }
 
-export default CryptoTable;
+const mapStateToProps = (state) => ({
+  currency: state.currency,
+})
+
+export default connect(mapStateToProps)(CryptoTable);

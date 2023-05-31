@@ -1,3 +1,4 @@
+import { connect } from 'react-redux';
 import LineChart from "/src/components/BtcLineChart";
 import BarChart from "/src/components/BtcBarChart";
 import { BtcChartWrapper, Container } from "./Coins.styles";
@@ -65,7 +66,7 @@ class Coins extends React.Component {
 
   render() {
     const { lineData, barData } = this.state;
-    const { coinData, currency } = this.props;
+    const { coinData } = this.props;
     return (
       <Container>
         <BtcChartWrapper>
@@ -74,12 +75,10 @@ class Coins extends React.Component {
               <LineChart
                 lineData={lineData}
                 coinData={coinData}
-                currency={currency}
               />
               <BarChart
                 barData={barData}
                 coinData={coinData}
-                currency={currency}
               />
             </>
           )}
@@ -88,7 +87,6 @@ class Coins extends React.Component {
         {coinData && (
           <CryptoTable
             coinData={coinData}
-            currency={currency}
             fetchData={this.fetchData}
           />
         )}
@@ -97,4 +95,8 @@ class Coins extends React.Component {
   }
 }
 
-export default Coins;
+const mapStateToProps = (state) => ({
+  currency: state.currency,
+})
+
+export default connect(mapStateToProps)(Coins);

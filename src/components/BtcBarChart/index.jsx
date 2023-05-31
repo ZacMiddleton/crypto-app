@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { connect } from 'react-redux';
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -100,4 +100,8 @@ const BarChart = ({ barData, coinData, currency }) => {
   );
 };
 
-export default BarChart;
+const mapStateToProps = (state) => ({
+  currency: state.currency,
+})
+
+export default connect(mapStateToProps)(BarChart);
