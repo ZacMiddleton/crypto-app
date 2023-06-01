@@ -113,6 +113,7 @@ const LineChart = ({ lineData, coinData, currency }) => {
 
 const mapStateToProps = (state) => ({
   currency: state.currency,
+  lineData: state.btcChartData.lineData,
 })
 
 export default connect(mapStateToProps)(LineChart);

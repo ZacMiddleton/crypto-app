@@ -1,29 +1,19 @@
-import { connect } from 'react-redux';
+import { useSelector, connect } from 'react-redux';
 import LineChart from "/src/components/BtcLineChart";
 import BarChart from "/src/components/BtcBarChart";
 import { BtcChartWrapper, Container } from "./Coins.styles";
 import React from "react";
-import { btcPriceData } from "/src/utils/CoinGecko";
 import CryptoTable from "/src/components/CryptoTable";
 import { coinData } from "/src/utils/CoinGecko";
+import { getBtcPriceData } from '../../store/btcChartData/actions';
 
 class Coins extends React.Component {
   state = {
-    lineData: null,
-    barData: null,
     perPage: 25,
     pageNumber: 1,
     timeline: 180,
   };
-
-  getBtcData = (info) => {
-    const { prices, total_volumes } = info.data;
-    this.setState({
-      lineData: prices,
-      barData: total_volumes,
-    });
-  };
-
+  
   handleInfiniteScroll = (info) => {
     let newCoinData = [...this.props.coinData];
     info.data.forEach((coin) => {
@@ -50,7 +40,7 @@ class Coins extends React.Component {
   componentDidMount() {
     const { currency } = this.props;
     const { timeline } = this.state;
-    btcPriceData(this.getBtcData, currency, timeline);
+    this.props.getBtcPriceData(currency, timeline);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -59,13 +49,13 @@ class Coins extends React.Component {
     if (currency !== prevProps.currency) {
       this.setState({ currency }, () => {
         coinData(this.handleChangeCurrency, currency, 1, perPage);
-        btcPriceData(this.getBtcData, currency, timeline);
+        this.props.getBtcPriceData(currency, timeline);
       });
     }
   }
 
   render() {
-    const { lineData, barData } = this.state;
+    const { lineData, barData } = this.props;
     const { coinData } = this.props;
     return (
       <Container>
@@ -73,11 +63,9 @@ class Coins extends React.Component {
           {lineData && barData && (
             <>
               <LineChart
-                lineData={lineData}
                 coinData={coinData}
               />
               <BarChart
-                barData={barData}
                 coinData={coinData}
               />
             </>
@@ -97,6 +85,12 @@ class Coins extends React.Component {
 
 const mapStateToProps = (state) => ({
   currency: state.currency,
+  lineData: state.btcChartData.lineData,
+  barData: state.btcChartData.barData
 })
 
-export default connect(mapStateToProps)(Coins);
+const mapDispatchToProps = {
+  getBtcPriceData,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Coins);

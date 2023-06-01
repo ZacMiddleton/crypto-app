@@ -6,6 +6,7 @@ import storage from 'redux-persist/lib/storage';
 import theme from "./theme/themeReducer";
 import currency from './currency/currencyReducer';
 import coinData from './coinData';
+import btcChartData from './btcChartData';
 
 const persistConfig = {
     key: 'root',
@@ -17,6 +18,7 @@ const reducers = combineReducers({
   theme,
   currency,
   coinData,
+  btcChartData
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);

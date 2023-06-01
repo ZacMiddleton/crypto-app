@@ -102,6 +102,7 @@ const BarChart = ({ barData, coinData, currency }) => {
 
 const mapStateToProps = (state) => ({
   currency: state.currency,
+  barData: state.btcChartData.barData
 })
 
 export default connect(mapStateToProps)(BarChart);
