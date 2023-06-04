@@ -42,3 +42,7 @@ export const formatNumber = (number) => {
         return "$"
     }
   }
+
+  export function formatCurrencyValue(value, currency) {
+    return `${currencySymbol(currency)}${new Intl.NumberFormat().format(value)}`;
+  }

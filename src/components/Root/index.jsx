@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Outlet, useLocation } from "react-router-dom";
 import { useLocalStorage } from "/src/utils/hooks";
 import { SearchInput } from "/src/components/SearchInput";
@@ -16,7 +16,9 @@ import {
 import { setCurrency } from "../../store/currency/action";
 import { toggleTheme } from "../../store/theme/actions";
 
-const Root = ({ toggleTheme, theme, setCurrency, coinData }) => {
+const Root = ({ coinData }) => {
+  const dispatch = useDispatch()
+  const theme = useSelector((state) => state.theme);
   const location = useLocation();
   const currentPath = location.pathname;
   const [optionSelected, setOptionSelected] = useLocalStorage(
@@ -28,7 +30,7 @@ const Root = ({ toggleTheme, theme, setCurrency, coinData }) => {
   const currencyToggle = (value) => {
     if (value) {
       setOptionSelected(value);
-      setCurrency(value);
+      dispatch(setCurrency(value));
     }
     setIsOpen(!isOpen);
   };
@@ -54,7 +56,7 @@ const Root = ({ toggleTheme, theme, setCurrency, coinData }) => {
               setIsOpen={setIsOpen}
             />
             <ThemeIconContainer
-              onClick={toggleTheme}
+              onClick={() => dispatch(toggleTheme())}
               style={{ cursor: "pointer" }}
             >
               {theme === "dark" ? <LightThemeIcon /> : <DarkThemeIcon />}
@@ -71,13 +73,4 @@ const Root = ({ toggleTheme, theme, setCurrency, coinData }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  currency: state.currency,
-  theme: state.theme,
-});
-
-const mapDispatchToProps = {
-  setCurrency,
-  toggleTheme,
-};
-export default connect(mapStateToProps, mapDispatchToProps)(Root);
+export default Root;

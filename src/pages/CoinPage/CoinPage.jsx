@@ -1,5 +1,5 @@
 import parse from "html-react-parser";
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import ConversionCalculator from "/src/components/ConversionCalculator";
 import {
   CoinBox,
@@ -32,7 +32,8 @@ import CoinPageChart from "/src/components/CoinPageChart";
 import CoinPageTimeline from "/src/components/CoinPageTimeline";
 import PercentageDisplay from "/src/components/PercentageDisplay";
 
-const CoinPage = ({ currency }) => {
+const CoinPage = () => {
+  const currency = useSelector((state) => state.currency);
   const [coinInfo, setCoinInfo] = useState(null);
   const [isCopied, setIsCopied] = useState(false);
   const [timeline, setTimeline] = useState("180");
@@ -311,8 +312,4 @@ const CoinPage = ({ currency }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  currency: state.currency,
-})
-
-export default connect(mapStateToProps)(CoinPage);
+export default CoinPage;

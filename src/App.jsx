@@ -20,12 +20,6 @@ import { getCoinData } from './store/coinData/actions';
 function App({theme, currency, coinData, getCoinData}) {
   const [coinInfo, setCoinInfo] = useState(null)
 
-  // const getCoinData = (info) => {
-  //   setCoinInfo(info.data)
-  // };
-
-  console.log(coinData);
-
   useEffect(() => {
     getCoinData(currency, 1, 25);
   }, []);

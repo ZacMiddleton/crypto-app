@@ -4,7 +4,6 @@ export const GET_COINDATA_SUCCESS = "GET_COINDATA_SUCCESS"
 export const GET_COINDATA_ERROR = "GET_COINDATA_ERROR"
 
 export const getCoinData = (currency, page, perPage) => async dispatch => {
-    console.log("called");
     const cur = currency.toLowerCase();
     try {
       const { data } = await axios(
