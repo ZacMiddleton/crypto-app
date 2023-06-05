@@ -29,7 +29,7 @@ function App() {
 
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/" element={<Root coinData={coinInfo} />}>
+      <Route path="/" element={<Root coinData={coinData} />}>
         <Route
           index
           path="/"

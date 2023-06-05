@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -25,7 +25,10 @@ ChartJS.register(
   Legend
 );
 
-const LineChart = ({ lineData, coinData, currency }) => {
+const LineChart = ({ coinData }) => {
+  const currency = useSelector((state) => state.currency);
+  const lineData = useSelector((state) => state.btcChartData.lineData);
+
   const chartRef = useRef(null);
 
   const options = {
@@ -111,9 +114,5 @@ const LineChart = ({ lineData, coinData, currency }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  currency: state.currency,
-  lineData: state.btcChartData.lineData,
-})
 
-export default connect(mapStateToProps)(LineChart);
+export default LineChart;

@@ -1,4 +1,4 @@
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -24,7 +24,10 @@ ChartJS.register(
   Legend
 );
 
-const BarChart = ({ barData, coinData, currency }) => {
+const BarChart = ({ coinData }) => {
+  const currency = useSelector(state => state.currency);
+  const barData = useSelector((state) => state.btcChartData.barData);
+
   const options = {
     responsive: true,
     maintainAspectRatio: true,
@@ -100,9 +103,4 @@ const BarChart = ({ barData, coinData, currency }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  currency: state.currency,
-  barData: state.btcChartData.barData
-})
-
-export default connect(mapStateToProps)(BarChart);
+export default BarChart;

@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const InputWrapper = styled.div`
-  // width: 270px;
   height: 30px;
   display: flex;
   align-items: center;
