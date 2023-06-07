@@ -13,9 +13,11 @@ import Portfolio from "./pages/Portfolio/Portfolio";
 import { SearchInput } from "./components/SearchInput";
 import { CurrencySelect } from "./components/CurrencySelect";
 import { ThemeProvider } from "styled-components";
+import { GlobalStyles } from "./GlobalStyles";
 import { darkTheme, lightTheme } from "./utils/theme";
-import { AppContainer, MainNav, NavContainer } from "./App.Styles";
-import NavMarketData from "./components/NavMarketData";
+import { AppContainer, MainNav, NavContainer, Wrapper } from "./App.Styles";
+import NavMarketData from "./components/NavMarketData"
+
 
 const Root = (props) => {
   const { toggleTheme, theme } = props;
@@ -36,15 +38,14 @@ const Root = (props) => {
         <Outlet />
       </div>
     </>
-  );``
+  );
 };
 
 function App() {
-  const [theme, setTheme] = useState("dark");
+  const [theme, setTheme] = useState("light");
 
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
-    console.log("clicked");
   };
 
   const router = createBrowserRouter(
@@ -61,8 +62,11 @@ function App() {
 
   return (
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+      <GlobalStyles />
       <AppContainer>
-        <RouterProvider router={router} />
+        <Wrapper>
+          <RouterProvider router={router} />
+        </Wrapper>
       </AppContainer>
     </ThemeProvider>
   );
