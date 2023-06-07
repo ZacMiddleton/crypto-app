@@ -1,6 +1,4 @@
-import { useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
-import { BtcPriceData } from "/src/utils/CoinGecko";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -24,17 +22,7 @@ ChartJS.register(
   Legend
 );
 
-const LineChart = () => {
-  const [lineData, setLineData] = useState(null);
-
-  const getData = (info) => {
-    setLineData(info.data.prices);
-  };
-
-  useEffect(() => {
-    BtcPriceData(getData);
-  }, []);
-
+const LineChart = ({lineData}) => {
   const options = {
     responsive: true,
     scales: {
@@ -52,14 +40,14 @@ const LineChart = () => {
   };
 
   const dateFormat = { day: "numeric", month: "numeric" };
-  const labels = lineData?.filter((item, index) => index % 20 === 0)
+  const labels = lineData.filter((item, index) => index % 20 === 0)
   .map((item) => new Date(item[0]).toLocaleDateString(undefined, dateFormat)) ?? null;
   const data = {
     labels,
     datasets: [
       {
         label: "",
-        data: lineData?.filter((item, index) => index % 20 ===0)
+        data: lineData.filter((item, index) => index % 20 ===0)
         .map((item) => item[1]) ?? null,
         borderColor: "green",
         backgroundColor: "green",
