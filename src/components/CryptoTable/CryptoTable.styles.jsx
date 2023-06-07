@@ -107,8 +107,15 @@ export const UnderLine = styled.div`
   grid-column: 1 / -1;
 `;
 
-export const TableContainer = styled.div`
-  color: ${(props) => {
+export const TableContainer = styled.div`  
+color: ${(props) => {
     return props.theme.text;
   }};
+background-color: ${(props) => {
+  return props.theme.secondary;
+}};
+width: calc (100% - 20px);
+padding: 50px 20px;
+border-radius: 10px;
+margin-bottom: 50px;
 `

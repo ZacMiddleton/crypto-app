@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, {withTheme} from "styled-components";
 
 export const Container = styled.div`
     width: 100%;
@@ -9,4 +9,10 @@ export const Container = styled.div`
 
 export const BtcChartWrapper = styled.div `
     display: flex;
+    width: 100%;
+    color: ${(props) => {
+        return props.theme.text;
+    }};
+    justify-content: space-between;
+    margin: 40px 0 80px 0;
 `

@@ -39,8 +39,8 @@ class Coins extends React.Component {
         <BtcChartWrapper>
           {lineData && barData && (
             <>
-              <LineChart lineData={lineData} />
-              <BarChart barData={barData} />
+              <LineChart lineData={lineData} coinData={coinData} />
+              <BarChart barData={barData} coinData={coinData} />
             </>
           )}
         </BtcChartWrapper>
