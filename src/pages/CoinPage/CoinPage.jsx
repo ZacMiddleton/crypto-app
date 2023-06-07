@@ -1,5 +1,6 @@
 import parse from "html-react-parser";
 import { Link } from "react-router-dom";
+import ConversionCalculator from "/src/components/ConversionCalculator";
 import {
   CoinBox,
   Container,
@@ -233,10 +234,10 @@ const CoinPage = ({ currency, theme }) => {
               <StackIcon />
             </div>
             {parse(description.en)}
-              <CopiedTextWrapper isCopied={isCopied} >
-                <CopiedCheck />
-                <span>Copied to clipboard!</span>
-              </CopiedTextWrapper>
+            <CopiedTextWrapper isCopied={isCopied}>
+              <CopiedCheck />
+              <span>Copied to clipboard!</span>
+            </CopiedTextWrapper>
           </DescriptionContainer>
           <LinksWrapper>
             <div>
@@ -289,6 +290,7 @@ const CoinPage = ({ currency, theme }) => {
               </div>
             )}
           </LinksWrapper>
+          <ConversionCalculator currency={currency} coinInfo={coinInfo} />
         </>
       )}
     </Container>
