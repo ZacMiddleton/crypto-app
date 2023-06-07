@@ -39,7 +39,7 @@ const Root = (props) => {
               </ThemeIconContainer>
             </StyledDiv>
           </MainNav>
-          <NavMarketData optionSelected={optionSelected} />
+          <NavMarketData optionSelected={optionSelected} coinData={props.coinData} />
         </NavContainer>
   
         <div>

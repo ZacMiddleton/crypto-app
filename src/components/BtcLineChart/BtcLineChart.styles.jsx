@@ -1,7 +1,7 @@
 import styled, {withTheme} from "styled-components";
 
 export const Container = styled.div`
-    height: 220px;
+    height: 240px;
     width: 100%;
     h1 {
         font-weight: 500;
@@ -9,7 +9,7 @@ export const Container = styled.div`
 `
 
 export const ChartWrapper = styled.div`
-    width: calc(50% - 55px);
+    width: calc(50% - 35px);
     height: 60%;
     display: flex;
     align-items: center;
@@ -17,6 +17,6 @@ export const ChartWrapper = styled.div`
     background: ${(props) => {
         return props.theme.secondary;
     }};
-    padding: 30px 20px;
+    padding: 30px 10px;
     border-radius: 20px;
 `

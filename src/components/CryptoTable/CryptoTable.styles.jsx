@@ -1,4 +1,5 @@
 import styled, { withTheme } from "styled-components";
+import { Link } from "react-router-dom";
 
 const gridTemplateColumns = `
   30px /* # */
@@ -80,9 +81,11 @@ export const MetricsWrapper = styled.div`
   }
 `;
 
-export const CoinTitle = styled.p`
+export const CoinTitle = styled(Link)`
   display: flex;
   align-items: center;
+  color: ${({theme}) => theme.text};
+  text-decoration: none;
   & > *:first-child {
     padding-right: 10px;
   }

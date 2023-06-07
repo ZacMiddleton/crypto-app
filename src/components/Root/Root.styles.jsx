@@ -38,7 +38,7 @@ export const StyledDiv = styled.div`
   height: 65%;
   input {
     flex: 1;
-    height: 90%;
+    height: 100%;
     border-radius: 8px;
     width: 250px;
     color: ${({theme}) => theme.text};
@@ -61,8 +61,12 @@ export const StyledDiv = styled.div`
 
 export const StyledLink = styled(NavLink)`
   text-decoration: none;
-  padding: 10px 35px;
+  padding: 0 35px;
   border-radius: 7px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: ${({ theme }) => theme.text};
   ${({ $active, theme }) => {
     return (
