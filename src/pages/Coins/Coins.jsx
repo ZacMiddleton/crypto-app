@@ -12,6 +12,8 @@ class Coins extends React.Component {
     barData: null,
     coinData: null,
     currency: this.props.currency,
+    perPage: 25,
+    pageNumber: 1,
   };
 
   getBtcData = (info) => {
@@ -23,25 +25,57 @@ class Coins extends React.Component {
   };
 
   getCoinData = (info) => {
-    this.setState({
-      coinData: info.data,
-    });
+    if (this.state.coinData) {
+      let newCoinData = [...this.state.coinData];
+      info.data.forEach((coin) => {
+        if (!newCoinData.some((item) => item.id === coin.id)) {
+          newCoinData.push(coin);
+        }
+      });
+      this.setState({ coinData: newCoinData });
+    } else {
+      this.setState({
+        coinData: [...info.data],
+      });
+    }
   };
 
+  handleInfiniteScroll = (info) => {
+    let newCoinData = [...this.state.coinData];
+      info.data.forEach((coin) => {
+        if (!newCoinData.some((item) => item.id === coin.id)) {
+          newCoinData.push(coin);
+        }
+      });
+      this.setState({ coinData: newCoinData });
+  }
+
+  handleChangeCurrency = (info) => {
+    this.setState({ coinData: info.data });
+  }
+
+  fetchData = () => {
+    const { pageNumber, currency, perPage } = this.state
+    const nextPage = pageNumber + 1;
+    const morePerPage = perPage + perPage;
+    coinData(this.handleInfiniteScroll, currency, nextPage, perPage);
+    this.setState({ pageNumber: nextPage, perPage: morePerPage });
+  }
+
   componentDidMount() {
-    const { currency } = this.state;
-    btcPriceData(this.getBtcData);
-    coinData(this.getCoinData, currency);
+    const { currency, perPage, pageNumber } = this.state;
+    btcPriceData(this.getBtcData, currency);
+    coinData(this.getCoinData, currency, pageNumber, perPage );
   }
 
   componentDidUpdate(prevProps, prevState) {
     const { currency } = this.props;
     if (currency !== prevProps.currency) {
-      this.setState({ currency }, () => {
-        coinData(this.getCoinData, currency);
+      this.setState({ currency, }, () => {
+        coinData(this.handleChangeCurrency, currency, 1, this.state.perPage);
       });
     }
-  }
+  };
 
   render() {
     const { lineData, barData, coinData, currency } = this.state;
@@ -64,7 +98,7 @@ class Coins extends React.Component {
           )}
         </BtcChartWrapper>
 
-        {coinData && <CryptoTable coinData={coinData} currency={currency} />}
+        {coinData && <CryptoTable coinData={coinData} currency={currency} fetchData={this.fetchData} />}
       </Container>
     );
   }

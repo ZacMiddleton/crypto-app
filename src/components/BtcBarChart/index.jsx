@@ -59,10 +59,6 @@ const BarChart = ({ barData, coinData, currency }) => {
     },
   };
 
-    useEffect(() => {
-      console.log('Currency prop has changed:', currency);
-    }, [currency]);
-
   const dateFormat = { day: "numeric", month: "numeric" };
   const labels =
     barData
@@ -83,8 +79,6 @@ const BarChart = ({ barData, coinData, currency }) => {
       },
     ],
   };
-
-  console.log(currency)
 
   return (
     <ChartWrapper>

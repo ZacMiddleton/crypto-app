@@ -1,7 +1,6 @@
 import styled, {withTheme, css} from "styled-components"
 import {NavLink} from "react-router-dom";
 import { searchSVG } from '/src/utils/SVG';
-console.log(searchSVG)
 export const NavContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -40,14 +39,14 @@ export const StyledDiv = styled.div`
   input {
     flex: 1;
     height: 90%;
-    border-radius: 10px;
-    width: 270px;
+    border-radius: 8px;
+    width: 250px;
     color: ${({theme}) => theme.text};
-    padding-left: 1.5em;
+    padding-left: 3em;
     background-image: url(${({theme}) => theme.searchIcon});
     background-repeat: no-repeat;
-    background-position: 0.5em center;
-    background-size: 2em;
+    background-position: 1em center;
+    background-size: 1.25em;
     border: none;
     background-color: ${({theme}) => theme.nav }
   }
@@ -56,7 +55,7 @@ export const StyledDiv = styled.div`
   }
   input::placeholder {
     color: ${({theme}) => theme.text};
-    padding-left: 5px;
+    font-size: 12px;
   }
 `;
 
@@ -74,3 +73,13 @@ export const StyledLink = styled(NavLink)`
     );
   }}
 `;
+
+export const ThemeIconContainer = styled.div`
+  height: 100%;
+  width: 39px;
+  border-radius: 7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: ${({theme}) => theme.nav};
+`
