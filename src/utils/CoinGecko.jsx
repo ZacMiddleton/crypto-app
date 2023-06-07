@@ -15,11 +15,11 @@ export const marketData = async (getData) => {
   }
 };
 
-export const btcPriceData = async (getData, currency) => {
+export const btcPriceData = async (getData, currency, timeline) => {
   try {
     const info = await limiter.schedule(() =>
       axios(
-        `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=${currency.toLowerCase()}&days=180&interval=daily`
+        `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=${currency.toLowerCase()}&days=${timeline}&interval=daily`
       )
     );
     getData(info);
@@ -29,7 +29,7 @@ export const btcPriceData = async (getData, currency) => {
 };
 
 export const coinData = async (dataFunction, currency, page, perPage) => {
-  const cur = currency.toLowerCase()
+  const cur = currency.toLowerCase();
   try {
     const info = await limiter.schedule(() =>
       axios(
@@ -50,6 +50,35 @@ export const getPageData = async (dataFunction, coin) => {
       )
     );
     dataFunction(info);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getCoinChart = async (
+  handleChartData,
+  coin,
+  currency,
+  timeline
+) => {
+  try {
+    const handleInterval = (time) => {
+      if (Number(time) <= 30) {
+        return "hourly";
+      } else if (Number(time) <= 180) {
+        return "daily";
+      } else {
+        return "weekly";
+      }
+    };
+    const info = await limiter.schedule(() =>
+      axios(
+        `https://api.coingecko.com/api/v3/coins/${coin}/market_chart?vs_currency=${currency.toLowerCase()}&days=${timeline}&interval=${handleInterval(
+          timeline
+        )}`
+      )
+    );
+    handleChartData(info);
   } catch (err) {
     console.log(err);
   }
