@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useSelector } from 'react-redux';
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -24,7 +24,9 @@ ChartJS.register(
   Legend
 );
 
-const BarChart = ({ barData, coinData, currency }) => {
+const BarChart = ({ barData, coinData }) => {
+  const currency = useSelector(state => state.currency);
+
   const options = {
     responsive: true,
     maintainAspectRatio: true,
@@ -86,10 +88,9 @@ const BarChart = ({ barData, coinData, currency }) => {
         <p>Volume 24h</p>
         {coinData && (
           <h1>
-            {coinData.map((item) => {
-              if (item.id === "bitcoin") {
-                return `${currencySymbol(currency)}${formatNumber(item.total_volume)}`;
-              }
+            {coinData.filter((item) => item.id === 'bitcoin')
+            .map((item) => {
+              return `${currencySymbol(currency)}${formatNumber(item.total_volume)}`
             })}
           </h1>
         )}

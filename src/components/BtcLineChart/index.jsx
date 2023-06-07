@@ -1,4 +1,5 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from "react";
+import { connect } from 'react-redux';
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -110,4 +111,8 @@ const LineChart = ({ lineData, coinData, currency }) => {
   );
 };
 
-export default LineChart;
+const mapStateToProps = (state) => ({
+  currency: state.currency,
+})
+
+export default connect(mapStateToProps)(LineChart);

@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useSelector } from 'react-redux';
 import { Line } from "react-chartjs-2";
 import PercentageBar from "/src/components/PercentageBar";
 import PercentageDisplay from "/src/components/PercentageDisplay";
 import { currencySymbol } from "/src/utils/ChartFunctions";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { formatCurrencyValue } from "../../utils/ChartFunctions";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -37,7 +38,9 @@ import {
   TableContainer,
 } from "./CryptoTable.styles";
 
-function CryptoTable({ coinData, currency, fetchData }) {
+function CryptoTable({ coinData, fetchData }) {
+  const currency = useSelector((state) => state.currency);
+
   const formatNumber = (number) => {
     if (Math.abs(number) >= 1_000_000_000_000) {
       return (number / 1_000_000_000_000).toFixed(2) + "T";
@@ -152,9 +155,7 @@ function CryptoTable({ coinData, currency, fetchData }) {
                   <img src={item.image} alt="" />{" "}
                   {`${item.name} (${item.symbol.toUpperCase()})`}
                 </CoinTitle>
-                <p>{`${currencySymbol(
-                  currency
-                )}${new Intl.NumberFormat().format(item.current_price)}`}</p>
+                <p>{formatCurrencyValue(item.current_price, currency)}</p>
                 <PercentageDisplay
                   percentage={item.price_change_percentage_1h_in_currency}
                 />
