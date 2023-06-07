@@ -33,7 +33,7 @@ function App() {
         <Route
           index
           path="/"
-          element={<Coins coinData={coinData} setCoinData={setCoinInfo} />}
+          element={<Coins />}
         />
         <Route path="/Portfolio" element={<Portfolio />} />
         <Route path="/coin/:coinId" element={<CoinPage />} />

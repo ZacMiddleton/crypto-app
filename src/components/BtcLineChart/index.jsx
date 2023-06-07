@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -25,9 +25,10 @@ ChartJS.register(
   Legend
 );
 
-const LineChart = ({ coinData }) => {
+const LineChart = () => {
   const currency = useSelector((state) => state.currency);
   const lineData = useSelector((state) => state.btcChartData.lineData);
+  const coinData = useSelector((state) => state.coinData.data);
 
   const chartRef = useRef(null);
 
@@ -100,11 +101,13 @@ const LineChart = ({ coinData }) => {
         <p>BTC</p>
         {coinData && (
           <h1>
-            {coinData.map((item) => {
-              if (item.id === "bitcoin") {
-                return `${currencySymbol(currency)}${item.current_price.toLocaleString()}`;
-              }
-            })}
+            {coinData
+              .filter((item) => item.id === "bitcoin")
+              .map((item) => {
+                return `${currencySymbol(
+                  currency
+                )}${item.current_price.toLocaleString()}`;
+              })}
           </h1>
         )}
         <p>{getFormattedDate()}</p>
@@ -113,6 +116,5 @@ const LineChart = ({ coinData }) => {
     </ChartWrapper>
   );
 };
-
 
 export default LineChart;

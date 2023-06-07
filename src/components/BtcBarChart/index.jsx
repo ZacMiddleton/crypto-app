@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -12,7 +12,11 @@ import {
 } from "chart.js";
 import "chart.js/auto";
 import { Container, ChartWrapper } from "./BtcBarChart";
-import { getFormattedDate, formatNumber, currencySymbol } from "/src/utils/ChartFunctions";
+import {
+  getFormattedDate,
+  formatNumber,
+  currencySymbol,
+} from "/src/utils/ChartFunctions";
 
 ChartJS.register(
   CategoryScale,
@@ -24,9 +28,10 @@ ChartJS.register(
   Legend
 );
 
-const BarChart = ({ coinData }) => {
-  const currency = useSelector(state => state.currency);
+const BarChart = () => {
+  const currency = useSelector((state) => state.currency);
   const barData = useSelector((state) => state.btcChartData.barData);
+  const coinData = useSelector((state) => state.coinData.data);
 
   const options = {
     responsive: true,
@@ -89,11 +94,13 @@ const BarChart = ({ coinData }) => {
         <p>Volume 24h</p>
         {coinData && (
           <h1>
-            {coinData.map((item) => {
-              if (item.id === "bitcoin") {
-                return `${currencySymbol(currency)}${formatNumber(item.total_volume)}`;
-              }
-            })}
+            {coinData
+              .filter((item) => item.id === "bitcoin")
+              .map((item) => {
+                return `${currencySymbol(currency)}${formatNumber(
+                  item.total_volume
+                )}`;
+              })}
           </h1>
         )}
         <p>{getFormattedDate()}</p>
