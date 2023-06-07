@@ -45,6 +45,7 @@ export const TitleDiv = styled.div`
   font-size: 12px;
   grid-template-columns: ${gridTemplateColumns};
   gap 2px;
+  margin-bottom: 20px;
 
   & > *:last-child {
     display: flex;
@@ -99,12 +100,13 @@ export const MetricsLegend = styled.span`
 `;
 
 export const UnderLine = styled.div`
-  border: 1px solid ${(props) => {
+  border-bottom: 1px solid ${(props) => {
     return props.theme.tertiary;
   }};
   width: 100%;
   display: block;
   grid-column: 1 / -1;
+  margin: 5px 0;
 `;
 
 export const TableContainer = styled.div`  

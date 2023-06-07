@@ -3,6 +3,9 @@ import styled, {withTheme} from "styled-components";
 export const Container = styled.div`
     height: 220px;
     width: 100%;
+    h1 {
+        font-weight: 500;
+    }
 `
 
 export const ChartWrapper = styled.div`

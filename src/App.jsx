@@ -3,46 +3,21 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
-  Link,
-  Outlet,
   RouterProvider,
 } from "react-router-dom";
 import "./App.css";
 import Coins from "./pages/Coins/Coins";
 import Portfolio from "./pages/Portfolio/Portfolio";
-import { SearchInput } from "./components/SearchInput";
-import { CurrencySelect } from "./components/CurrencySelect";
+import Root from "./components/Root"
+import { useLocalStorage } from '/src/utils/hooks';
 import { ThemeProvider } from "styled-components";
 import { GlobalStyles } from "./GlobalStyles";
 import { darkTheme, lightTheme } from "./utils/theme";
-import { AppContainer, MainNav, NavContainer, Wrapper } from "./App.Styles";
-import NavMarketData from "./components/NavMarketData"
-
-
-const Root = (props) => {
-  const { toggleTheme, theme } = props;
-  return (
-    <>
-      <NavContainer>
-        <MainNav>
-          <Link to="/">Coins</Link>
-          <Link to="/Portfolio">Portfolio</Link>
-          <SearchInput />
-          <CurrencySelect />
-          <button onClick={toggleTheme}>{theme}</button>
-        </MainNav>
-        <NavMarketData />
-      </NavContainer>
-
-      <div>
-        <Outlet />
-      </div>
-    </>
-  );
-};
+import { AppContainer, Wrapper, } from "./App.Styles";
 
 function App() {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useLocalStorage("light", 'light');
+  const [currency, setCurrency] = useLocalStorage('currency', 'USD')
 
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
@@ -52,9 +27,9 @@ function App() {
     createRoutesFromElements(
       <Route
         path="/"
-        element={<Root theme={theme} toggleTheme={toggleTheme} />}
+        element={<Root theme={theme} toggleTheme={toggleTheme} currency={currency} setCurrency={setCurrency} />}
       >
-        <Route index path="/" element={<Coins />} />
+        <Route index path="/" element={<Coins currency={currency} />} />
         <Route path="/Portfolio" element={<Portfolio />} />
       </Route>
     )

@@ -18,9 +18,9 @@ export const btcPriceData = async (getData) => {
   }
 };
 
-export const coinData = async (getCoinData) => {
+export const coinData = async (getCoinData, currency) => {
   try {
-    const info = await axios ("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d");
+    const info = await axios (`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency.toLowerCase()}&order=market_cap_desc&per_page=10&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d`);
     getCoinData(info)
   } catch(err) {
     console.log(err)

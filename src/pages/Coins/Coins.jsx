@@ -11,6 +11,7 @@ class Coins extends React.Component {
     lineData: null,
     barData: null,
     coinData: null,
+    currency: this.props.currency,
   };
 
   getBtcData = (info) => {
@@ -28,24 +29,42 @@ class Coins extends React.Component {
   };
 
   componentDidMount() {
+    const { currency } = this.state;
     btcPriceData(this.getBtcData);
-    coinData(this.getCoinData);
+    coinData(this.getCoinData, currency);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { currency } = this.props;
+    if (currency !== prevProps.currency) {
+      this.setState({ currency }, () => {
+        coinData(this.getCoinData, currency);
+      });
+    }
   }
 
   render() {
-    const { lineData, barData, coinData } = this.state;
+    const { lineData, barData, coinData, currency } = this.state;
     return (
       <Container>
         <BtcChartWrapper>
           {lineData && barData && (
             <>
-              <LineChart lineData={lineData} coinData={coinData} />
-              <BarChart barData={barData} coinData={coinData} />
+              <LineChart
+                lineData={lineData}
+                coinData={coinData}
+                currency={currency}
+              />
+              <BarChart
+                barData={barData}
+                coinData={coinData}
+                currency={currency}
+              />
             </>
           )}
         </BtcChartWrapper>
 
-        {coinData && <CryptoTable coinData={coinData} />}
+        {coinData && <CryptoTable coinData={coinData} currency={currency} />}
       </Container>
     );
   }

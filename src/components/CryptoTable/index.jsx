@@ -1,6 +1,8 @@
+import { useEffect } from "react";
 import { Line } from "react-chartjs-2";
 import PercentageBar from "/src/components/PercentageBar";
 import PercentageDisplay from "/src/components/PercentageDisplay";
+import { currencySymbol } from "/src/utils/ChartFunctions";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -34,7 +36,7 @@ import {
   TableContainer,
 } from "./CryptoTable.styles";
 
-function CryptoTable({ coinData }) {
+function CryptoTable({ coinData, currency }) {
   const formatNumber = (number) => {
     if (Math.abs(number) >= 1_000_000_000) {
       return (number / 1_000_000_000).toFixed(2) + "B";
@@ -115,6 +117,10 @@ function CryptoTable({ coinData }) {
     };
   };
 
+  useEffect(() => {
+    console.log('Currency prop has changed:', currency);
+  }, [currency]);
+
   return (
     <TableContainer>
       <TitleDiv>
@@ -130,6 +136,7 @@ function CryptoTable({ coinData }) {
           Last 7d <span></span>
         </p>
       </TitleDiv>
+      <UnderLine />
       <StyledList>
         {coinData.map((item, index) => {
           const colorOne = colorGeneratorOne[Math.floor(Math.random() * 4)]
@@ -140,7 +147,7 @@ function CryptoTable({ coinData }) {
                 <img src={item.image} alt="" />{" "}
                 {`${item.name} (${item.symbol.toUpperCase()})`}
               </CoinTitle>
-              <p>{`$${new Intl.NumberFormat().format(item.current_price)}`}</p>
+              <p>{`${currencySymbol(currency)}${new Intl.NumberFormat().format(item.current_price)}`}</p>
               <PercentageDisplay
                 percentage={item.price_change_percentage_1h_in_currency}
               />

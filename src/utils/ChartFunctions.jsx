@@ -1,10 +1,10 @@
 export const formatNumber = (number) => {
     if (Math.abs(number) >= 1_000_000_000) {
-      return (number / 1_000_000_000).toFixed(2) + "Bln";
+      return (number / 1_000_000_000).toFixed(2) + " bln";
     } else if (Math.abs(number) >= 1_000_000) {
-      return (number / 1_000_000).toFixed(2) + "Mln";
+      return (number / 1_000_000).toFixed(2) + " mln";
     } else if (Math.abs(number) >= 1_000_000_0000) {
-      return (number / 1_000_000_0000).toFixed(2) + "Tln";
+      return (number / 1_000_000_0000).toFixed(2) + " tln";
     } else {
       return number;
     }
@@ -23,3 +23,22 @@ export const formatNumber = (number) => {
   
     return `${month} ${day}, ${year}`;
   };
+
+  export const currencySymbol = (value) => {
+    switch (value) {
+      case "USD":
+        return "$"
+      case "CAD":
+        return "$"
+      case "GBP":
+        return "£"
+      case "EUR":
+        return "€"
+      case "BTC":
+        return "₿"
+      case "ETH":
+        return "Ξ"
+      default:
+        return "$"
+    }
+  }

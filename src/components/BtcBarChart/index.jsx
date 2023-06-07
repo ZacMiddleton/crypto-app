@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -11,7 +12,7 @@ import {
 } from "chart.js";
 import "chart.js/auto";
 import { Container, ChartWrapper } from "./BtcBarChart";
-import { getFormattedDate, formatNumber } from "/src/utils/ChartFunctions";
+import { getFormattedDate, formatNumber, currencySymbol } from "/src/utils/ChartFunctions";
 
 ChartJS.register(
   CategoryScale,
@@ -23,7 +24,7 @@ ChartJS.register(
   Legend
 );
 
-const BarChart = ({ barData, coinData }) => {
+const BarChart = ({ barData, coinData, currency }) => {
   const options = {
     responsive: true,
     maintainAspectRatio: true,
@@ -58,6 +59,10 @@ const BarChart = ({ barData, coinData }) => {
     },
   };
 
+    useEffect(() => {
+      console.log('Currency prop has changed:', currency);
+    }, [currency]);
+
   const dateFormat = { day: "numeric", month: "numeric" };
   const labels =
     barData
@@ -79,6 +84,8 @@ const BarChart = ({ barData, coinData }) => {
     ],
   };
 
+  console.log(currency)
+
   return (
     <ChartWrapper>
       <Container>
@@ -87,7 +94,7 @@ const BarChart = ({ barData, coinData }) => {
           <h1>
             {coinData.map((item) => {
               if (item.id === "bitcoin") {
-                return formatNumber(item.total_volume);
+                return `${currencySymbol(currency)}${formatNumber(item.total_volume)}`;
               }
             })}
           </h1>
