@@ -11,6 +11,7 @@ export const ListItem = styled.li`
     display: flex;
     margin: 10px 0;
     counter-increment: item;
+    align-items: center;
 
     &::before {
         content: counter(item) '';
@@ -19,5 +20,10 @@ export const ListItem = styled.li`
 
     p {
         margin-right: 5px;
+    }
+
+    div {
+        height: 80px;
+        width: 125px;
     }
 `;

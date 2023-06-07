@@ -9,7 +9,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import 'chart.js/auto'
+import "chart.js/auto";
 import { Container } from "./BtcLineChart.styles";
 
 ChartJS.register(
@@ -22,9 +22,9 @@ ChartJS.register(
   Legend
 );
 
-const LineChart = ({lineData}) => {
+const LineChart = ({ lineData }) => {
   const options = {
-    responsive: true,
+    responsive: true, 
     scales: {
       x: {
         grid: {
@@ -40,22 +40,29 @@ const LineChart = ({lineData}) => {
   };
 
   const dateFormat = { day: "numeric", month: "numeric" };
-  const labels = lineData.filter((item, index) => index % 20 === 0)
-  .map((item) => new Date(item[0]).toLocaleDateString(undefined, dateFormat)) ?? null;
+  const labels =
+    lineData
+      .filter((item, index) => index % 10 === 0)
+      .map((item) =>
+        new Date(item[0]).toLocaleDateString(undefined, dateFormat)
+      ) ?? null;
   const data = {
     labels,
     datasets: [
       {
         label: "",
-        data: lineData.filter((item, index) => index % 20 ===0)
-        .map((item) => item[1]) ?? null,
+        data:
+          lineData
+            .filter((item, index) => index % 10 === 0) ?? null,
         borderColor: "green",
         backgroundColor: "green",
       },
     ],
   };
 
-  return <Container>{lineData && <Line options={options} data={data} />}</Container>;
+  return (
+    <Container>{lineData && <Line options={options} data={data} />}</Container>
+  );
 };
 
 export default LineChart;
