@@ -20,16 +20,18 @@ import {
   LinksWrapper,
   StyledLinkIcon,
   StyledClipboard,
+  CopiedTextWrapper,
 } from "./CoinPage.styles";
 import { useEffect, useState } from "react";
 import { getPageData } from "/src/utils/CoinGecko";
 import { useParams } from "react-router-dom";
-import { LinkIcon, StackIcon, ClipboardIcon } from "/src/assets/ThemeIcons";
+import { LinkIcon, StackIcon, CopiedCheck } from "/src/assets/ThemeIcons";
 import { currencySymbol } from "/src/utils/ChartFunctions";
 import PercentageDisplay from "/src/components/PercentageDisplay";
 
 const CoinPage = ({ currency, theme }) => {
   const [coinInfo, setCoinInfo] = useState(null);
+  const [isCopied, setIsCopied] = useState(false);
   const { coinId } = useParams();
 
   function formatDate(dateString) {
@@ -75,15 +77,23 @@ const CoinPage = ({ currency, theme }) => {
   } = market_data ?? {};
 
   const getDomainName = (url) => {
-    const urlObject = new URL(url);
-    return urlObject.hostname;
+    try {
+      const urlObject = new URL(url);
+      return urlObject.hostname;
+    } catch (err) {
+      console.log(err);
+      return url;
+    }
   };
 
   const copyToClipboard = (text) => {
     navigator.clipboard
       .writeText(text)
       .then(() => {
-        console.log("Text copied to clipboard:", text);
+        setIsCopied(true);
+        setTimeout(() => {
+          setIsCopied(false);
+        }, 2000);
       })
       .catch((error) => {
         console.error("Failed to copy text:", error);
@@ -125,14 +135,18 @@ const CoinPage = ({ currency, theme }) => {
                 <AllTimeWrapper>
                   <p>
                     <Triangle positive={true} />
-                    {`All Time High: ${currencySymbol(currency)}${ath[cur].toLocaleString()}`}
+                    {`All Time High: ${currencySymbol(currency)}${ath[
+                      cur
+                    ].toLocaleString()}`}
                   </p>
                   <p>{`${formatDate(ath_date[cur])}`}</p>
                 </AllTimeWrapper>
                 <AllTimeWrapper>
                   <p>
                     <Triangle positive={false} />
-                    {`All Time Low: ${currencySymbol(currency)}${atl[cur].toLocaleString()}`}
+                    {`All Time Low: ${currencySymbol(currency)}${atl[
+                      cur
+                    ].toLocaleString()}`}
                   </p>
                   <p>{`${formatDate(atl_date[cur])}`}</p>
                 </AllTimeWrapper>
@@ -219,6 +233,10 @@ const CoinPage = ({ currency, theme }) => {
               <StackIcon />
             </div>
             {parse(description.en)}
+              <CopiedTextWrapper isCopied={isCopied} >
+                <CopiedCheck />
+                <span>Copied to clipboard!</span>
+              </CopiedTextWrapper>
           </DescriptionContainer>
           <LinksWrapper>
             <div>

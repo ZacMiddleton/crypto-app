@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
 import { LinkIcon, ClipboardIcon } from "/src/assets/ThemeIcons";
 
@@ -189,11 +189,12 @@ export const DescriptionContainer = styled.div`
       text-align: center;
       line-height: 20px;
       margin-top: 32px;
+      position: relative;
       svg {
         height: 20px;
         margin: 20px;
       }
-      div {
+      > :first-child {
         width: 100%;
         display: flex;
         justify-content: center;
@@ -245,3 +246,24 @@ export const StyledClipboard = styled(ClipboardIcon)`
   cursor: pointer;
 `
 
+
+export const CopiedTextWrapper = styled.div`
+  position: fixed;
+  background-color: #000000;
+  border-radius: 20px;
+  padding: 10px 25px 10px 20px;
+  ${({theme}) => theme.text};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: ${(props) => props.isCopied ? "translateY(0px)" : "translateY(1000px)"};
+  left: 45%;
+  transition: transform 0.3s ease-out;
+  visibility: ${(props) => props.isCopied ? "visible" : "hidden"};
+  top: 900px;
+  z-index: 1;
+  svg {
+    height: 20px;
+    margin: 0 8px 0 0;
+  }
+`;
