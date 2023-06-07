@@ -3,7 +3,7 @@ import { DropDownMenu, DropDownWrapper, Symbol, Triangle } from "./CurrencySelec
 import { currencySymbol } from "/src/utils/ChartFunctions";
 export function CurrencySelect({ isOpen, optionSelected, currencyToggle, setIsOpen }) {
   const dropdownRef = useRef(null);
-  const currencyList = ["USD", "CAD", "GBP", "EUR", "BTC", "ETH"];
+  const currencyList = ["USD", "CAD", "GBP", "EUR", "BTC", "ETH", "AUD", "CNY"];
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       setIsOpen(false);

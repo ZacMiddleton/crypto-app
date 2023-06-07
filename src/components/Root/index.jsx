@@ -16,7 +16,7 @@ import {
 import { setCurrency } from "../../store/currency/action";
 import { toggleTheme } from "../../store/theme/actions";
 
-const Root = ({ coinData }) => {
+const Root = () => {
   const dispatch = useDispatch()
   const theme = useSelector((state) => state.theme);
   const location = useLocation();
@@ -63,7 +63,7 @@ const Root = ({ coinData }) => {
             </ThemeIconContainer>
           </StyledDiv>
         </MainNav>
-        <NavMarketData optionSelected={optionSelected} coinData={coinData} />
+        <NavMarketData optionSelected={optionSelected} />
       </NavContainer>
 
       <div>

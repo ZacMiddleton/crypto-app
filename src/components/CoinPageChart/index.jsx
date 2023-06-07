@@ -14,6 +14,7 @@ import {
 } from "chart.js";
 import "chart.js/auto";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -24,7 +25,9 @@ ChartJS.register(
   Legend
 );
 
-const CoinPageChart = ({ coinId, currency, timeline }) => {
+const CoinPageChart = ({ coinId }) => {
+  const currency = useSelector((state) => state.currency)
+  const timeline = useSelector((state) => state.coinPageTimeline);
   const [chartData, setChartData] = useState(null);
 
   const handleChartData = (data) => {

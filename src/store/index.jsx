@@ -7,6 +7,7 @@ import theme from "./theme/themeReducer";
 import currency from './currency/currencyReducer';
 import coinData from './coinData';
 import btcChartData from './btcChartData';
+import coinPageTimeline from './coinPageTimeline';
 
 const persistConfig = {
     key: 'root',
@@ -18,7 +19,8 @@ const reducers = combineReducers({
   theme,
   currency,
   coinData,
-  btcChartData
+  btcChartData,
+  coinPageTimeline
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
