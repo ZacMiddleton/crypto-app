@@ -34,7 +34,6 @@ import PercentageDisplay from "/src/components/PercentageDisplay";
 
 const CoinPage = () => {
   const currency = useSelector((state) => state.currency);
-
   const [coinInfo, setCoinInfo] = useState(null);
   const [isCopied, setIsCopied] = useState(false);
   const [timeline, setTimeline] = useState("180");
