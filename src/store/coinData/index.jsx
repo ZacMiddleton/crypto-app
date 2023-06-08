@@ -3,6 +3,7 @@ import { GET_COINDATA_SUCCESS, SET_COINDATA } from "./actions";
 const initialState = {};
 
 const coinDataReducer = (state = initialState, action) => {
+
   switch (action.type) {
     case GET_COINDATA_SUCCESS: {
       if (!state.data) {
