@@ -33,7 +33,6 @@ const Coins = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(setCurrency(currency));
     dispatch(getCoinData(currency, 1, perPage));
     dispatch(getBtcPriceData(currency, timeline));
   }, [currency]);

@@ -1,22 +1,26 @@
-import { GET_COINDATA_SUCCESS, SET_COINDATA } from "./actions";
 
-const initialState = {};
+import { GET_COINDATA_SUCCESS } from "./actions";
+
+const initialState = {
+  data: []
+};
 
 const coinDataReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_COINDATA_SUCCESS: {
-      if (!state.data) {
-        return {
-          ...state,
-          data: [...action.payload],
-        };
-      }
-      const newCoinData = state.data.filter(
-        (coin) => !action.payload.some((item) => item.id === coin.id)
-      );
+
+      const newCoinsMap = action.payload.reduce((map, coin) => {
+        map[coin.id] = coin;
+        return map;
+      }, {});
+      
+      const newData = state.data.map(coin => newCoinsMap[coin.id] ? newCoinsMap[coin.id] : coin);
+
+      const existingCoinIds = new Set(state.data.map(coin => coin.id));
+      const uniqueCoins = action.payload.filter(coin => !existingCoinIds.has(coin.id));
       return {
         ...state,
-        data: [...newCoinData, ...action.payload],
+        data: [...newData, ...uniqueCoins],
       };
     }
     default:

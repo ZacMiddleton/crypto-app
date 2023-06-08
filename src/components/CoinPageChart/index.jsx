@@ -97,7 +97,7 @@ const CoinPageChart = ({ coinId }) => {
       },
     ],
   };
-
+  
   return (
     <ChartContainer>
       {chartData && <Line data={data} options={options} />}
