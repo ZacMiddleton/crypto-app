@@ -1,4 +1,3 @@
-
 import { GET_COINDATA_SUCCESS } from "./actions";
 
 const initialState = {
