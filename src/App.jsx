@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import {connect} from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -9,34 +9,37 @@ import {
 import "./App.css";
 import Coins from "./pages/Coins/Coins";
 import Portfolio from "./pages/Portfolio/Portfolio";
-import Root from "./components/Root"
+import Root from "./components/Root";
 import CoinPage from "./pages/CoinPage/CoinPage";
-// import { coinData } from "./utils/CoinGecko";
 import { ThemeProvider } from "styled-components";
 import { darkTheme, lightTheme } from "./utils/theme";
-import { AppContainer, Wrapper, } from "./App.Styles";
-import { getCoinData } from './store/coinData/actions';
+import { AppContainer, Wrapper } from "./App.Styles";
+import { getCoinData } from "./store/coinData/actions";
 
-function App({theme, currency, coinData, getCoinData}) {
-  const [coinInfo, setCoinInfo] = useState(null)
+function App() {
+  const [coinInfo, setCoinInfo] = useState(null);
+  const dispatch = useDispatch();
+  const theme = useSelector((state) => state.theme);
+  const currency = useSelector((state) => state.currency);
+  const coinData = useSelector((state) => state.coinData.data);
 
   useEffect(() => {
-    getCoinData(currency, 1, 25);
+    dispatch(getCoinData(currency, 1, 25));
   }, []);
-
 
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route
-        path="/"
-        element={<Root coinData={coinInfo} />}
-      >
-        <Route index path="/" element={<Coins coinData={coinData} setCoinData={setCoinInfo} />} />
+      <Route path="/" element={<Root coinData={coinData} />}>
+        <Route
+          index
+          path="/"
+          element={<Coins />}
+        />
         <Route path="/Portfolio" element={<Portfolio />} />
         <Route path="/coin/:coinId" element={<CoinPage />} />
       </Route>
     )
-  )
+  );
 
   return (
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
@@ -49,14 +52,4 @@ function App({theme, currency, coinData, getCoinData}) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  theme: state.theme,
-  currency: state.currency,
-  coinData: state.coinData.data,
-})
-
-const mapDispatchToProps = {
-  getCoinData,
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

@@ -1,102 +1,57 @@
-import { connect } from 'react-redux';
+import { useState, useEffect } from "react";
+import { useSelector, connect, useDispatch } from "react-redux";
 import LineChart from "/src/components/BtcLineChart";
 import BarChart from "/src/components/BtcBarChart";
 import { BtcChartWrapper, Container } from "./Coins.styles";
 import React from "react";
-import { btcPriceData } from "/src/utils/CoinGecko";
 import CryptoTable from "/src/components/CryptoTable";
-import { coinData } from "/src/utils/CoinGecko";
+import { getBtcPriceData } from "../../store/btcChartData/actions";
+import { setCurrency } from "../../store/currency/action";
+import { getCoinData } from "../../store/coinData/actions";
 
-class Coins extends React.Component {
-  state = {
-    lineData: null,
-    barData: null,
-    perPage: 25,
-    pageNumber: 1,
-    timeline: 180,
-  };
+const Coins = () => {
+  const dispatch = useDispatch();
+  const currency = useSelector((state) => state.currency);
+  const lineData = useSelector((state) => state.btcChartData.lineData);
+  const barData = useSelector((state) => state.btcChartData.barData);
+  const coinData = useSelector((state) => state.coinData.data);
 
-  getBtcData = (info) => {
-    const { prices, total_volumes } = info.data;
-    this.setState({
-      lineData: prices,
-      barData: total_volumes,
-    });
-  };
+  const [perPage, setPerPage] = useState(25);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [timeline, setTimeline] = useState(180);
 
-  handleInfiniteScroll = (info) => {
-    let newCoinData = [...this.props.coinData];
-    info.data.forEach((coin) => {
-      if (!newCoinData.some((item) => item.id === coin.id)) {
-        newCoinData.push(coin);
-      }
-    });
-    this.props.setCoinData(newCoinData);
-  };
-
-  handleChangeCurrency = (info) => {
-    this.props.setCoinData(info.data);
-  };
-
-  fetchData = () => {
-    const { pageNumber, perPage } = this.state;
-    const { currency } = this.props;
+  const fetchData = () => {
     const nextPage = pageNumber + 1;
     const morePerPage = perPage + perPage;
-    coinData(this.handleInfiniteScroll, currency, nextPage, perPage);
-    this.setState({ pageNumber: nextPage, perPage: morePerPage });
+    dispatch(getCoinData(currency, nextPage, perPage));
+    setPageNumber(nextPage);
+    setPerPage(morePerPage);
   };
 
-  componentDidMount() {
-    const { currency } = this.props;
-    const { timeline } = this.state;
-    btcPriceData(this.getBtcData, currency, timeline);
-  }
+  useEffect(() => {
+    dispatch(getBtcPriceData(currency, timeline));
+  }, []);
 
-  componentDidUpdate(prevProps, prevState) {
-    const { currency } = this.props;
-    const { timeline, perPage } = this.state;
-    if (currency !== prevProps.currency) {
-      this.setState({ currency }, () => {
-        coinData(this.handleChangeCurrency, currency, 1, perPage);
-        btcPriceData(this.getBtcData, currency, timeline);
-      });
-    }
-  }
+  useEffect(() => {
+    dispatch(setCurrency(currency));
+    dispatch(getCoinData(currency, 1, perPage));
+    dispatch(getBtcPriceData(currency, timeline));
+  }, [currency]);
 
-  render() {
-    const { lineData, barData } = this.state;
-    const { coinData } = this.props;
-    return (
-      <Container>
-        <BtcChartWrapper>
-          {lineData && barData && (
-            <>
-              <LineChart
-                lineData={lineData}
-                coinData={coinData}
-              />
-              <BarChart
-                barData={barData}
-                coinData={coinData}
-              />
-            </>
-          )}
-        </BtcChartWrapper>
-
-        {coinData && (
-          <CryptoTable
-            coinData={coinData}
-            fetchData={this.fetchData}
-          />
+  return (
+    <Container>
+      <BtcChartWrapper>
+        {lineData && barData && (
+          <>
+            <LineChart />
+            <BarChart />
+          </>
         )}
-      </Container>
-    );
-  }
-}
+      </BtcChartWrapper>
 
-const mapStateToProps = (state) => ({
-  currency: state.currency,
-})
+      {coinData && <CryptoTable fetchData={fetchData} />}
+    </Container>
+  );
+};
 
-export default connect(mapStateToProps)(Coins);
+export default Coins;

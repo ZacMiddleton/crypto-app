@@ -1,9 +1,11 @@
 import axios from "axios";
 
-export const GET_COINDATA_SUCCESS = "GET_COINDATA_SUCCESS"
-export const GET_COINDATA_ERROR = "GET_COINDATA_ERROR"
+export const GET_COINDATA_SUCCESS = "GET_COINDATA_SUCCESS";
+export const GET_COINDATA_ERROR = "GET_COINDATA_ERROR";
+export const SET_COINDATA = "SET_COINDATA";
 
-export const getCoinData = (currency, page, perPage) => async dispatch => {
+export const getCoinData =
+  (currency, page, perPage) => async (dispatch) => {
     const cur = currency.toLowerCase();
     try {
       const { data } = await axios(

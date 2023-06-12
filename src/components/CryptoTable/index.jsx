@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 import { Line } from "react-chartjs-2";
 import PercentageBar from "/src/components/PercentageBar";
 import PercentageDisplay from "/src/components/PercentageDisplay";
@@ -38,8 +38,9 @@ import {
   TableContainer,
 } from "./CryptoTable.styles";
 
-function CryptoTable({ coinData, fetchData }) {
+function CryptoTable({ fetchData }) {
   const currency = useSelector((state) => state.currency);
+  const coinData = useSelector((state) => state.coinData.data);
 
   const formatNumber = (number) => {
     if (Math.abs(number) >= 1_000_000_000_000) {

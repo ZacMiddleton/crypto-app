@@ -15,19 +15,6 @@ export const marketData = async (getData) => {
   }
 };
 
-export const btcPriceData = async (getData, currency, timeline) => {
-  try {
-    const info = await limiter.schedule(() =>
-      axios(
-        `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=${currency.toLowerCase()}&days=${timeline}&interval=daily`
-      )
-    );
-    getData(info);
-  } catch (err) {
-    console.log(err);
-  }
-};
-
 export const coinData = async (dataFunction, currency, page, perPage) => {
   const cur = currency.toLowerCase();
   try {
