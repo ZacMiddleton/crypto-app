@@ -1,7 +1,12 @@
+import { useSelector, useDispatch} from "react-redux";
 import { useState } from "react";
 import { TimelineWrapper, TimeContainer } from "./CoinPageTimeline.styles";
+import { setCoinPageTimeline } from '../../store/coinPageTimeline/actions';
 
-const CoinPageTimeline = ({ handleTimeline, timeline }) => {
+const CoinPageTimeline = () => {
+  const dispatch = useDispatch();
+  const timeline = useSelector((state) => state.coinPageTimeline);
+  
   const [isFocused, setIsFocused] = useState(false);
 
   return (
@@ -9,7 +14,7 @@ const CoinPageTimeline = ({ handleTimeline, timeline }) => {
       <TimeContainer
         tabIndex={0}
         onClick={() => {
-          handleTimeline("1");
+          dispatch(setCoinPageTimeline("1"));
           setIsFocused(true);
         }}
         backgroundColor={timeline === "1" ? "nav" : "secondary"}
@@ -21,7 +26,7 @@ const CoinPageTimeline = ({ handleTimeline, timeline }) => {
       <TimeContainer
         tabIndex={0}
         onClick={() => {
-          handleTimeline("7");
+          dispatch(setCoinPageTimeline("7"));
           setIsFocused(true);
         }}
         backgroundColor={timeline === "7" ? "nav" : "secondary"}
@@ -33,7 +38,7 @@ const CoinPageTimeline = ({ handleTimeline, timeline }) => {
       <TimeContainer
         tabIndex={0}
         onClick={() => {
-          handleTimeline("14");
+          dispatch(setCoinPageTimeline("14"));
           setIsFocused(true);
         }}
         backgroundColor={timeline === "14" ? "nav" : "secondary"}
@@ -45,7 +50,7 @@ const CoinPageTimeline = ({ handleTimeline, timeline }) => {
       <TimeContainer
         tabIndex={0}
         onClick={() => {
-          handleTimeline("30");
+          dispatch(setCoinPageTimeline("30"));
           setIsFocused(true);
         }}
         backgroundColor={timeline === "30" ? "nav" : "secondary"}
@@ -57,7 +62,7 @@ const CoinPageTimeline = ({ handleTimeline, timeline }) => {
       <TimeContainer
         tabIndex={0}
         onClick={() => {
-          handleTimeline("90");
+          dispatch(setCoinPageTimeline("90"));
           setIsFocused(true);
         }}
         backgroundColor={timeline === "90" ? "nav" : "secondary"}
@@ -69,7 +74,7 @@ const CoinPageTimeline = ({ handleTimeline, timeline }) => {
       <TimeContainer
         tabIndex={0}
         onClick={() => {
-          handleTimeline("180");
+          dispatch(setCoinPageTimeline("180"));
           setIsFocused(true);
         }}
         backgroundColor={timeline === "180" ? "nav" : "secondary"}
@@ -81,7 +86,7 @@ const CoinPageTimeline = ({ handleTimeline, timeline }) => {
       <TimeContainer
         tabIndex={0}
         onClick={() => {
-          handleTimeline("360");
+          dispatch(setCoinPageTimeline("360"));
           setIsFocused(true);
         }}
         backgroundColor={timeline === "360" ? "nav" : "secondary"}
@@ -93,7 +98,7 @@ const CoinPageTimeline = ({ handleTimeline, timeline }) => {
       <TimeContainer
         tabIndex={0}
         onClick={() => {
-          handleTimeline("max");
+          dispatch(setCoinPageTimeline("max"));
           setIsFocused(true);
         }}
         backgroundColor={timeline === "max" ? "nav" : "secondary"}

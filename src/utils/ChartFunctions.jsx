@@ -38,6 +38,8 @@ export const formatNumber = (number) => {
         return "₿"
       case "ETH":
         return "Ξ"
+      case "CNY":
+        return "¥"
       default:
         return "$"
     }

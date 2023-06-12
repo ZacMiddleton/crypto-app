@@ -1,5 +1,5 @@
 import parse from "html-react-parser";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 import ConversionCalculator from "/src/components/ConversionCalculator";
 import {
   CoinBox,
@@ -57,10 +57,6 @@ const CoinPage = () => {
 
   const handleInfo = (info) => {
     setCoinInfo(info.data);
-  };
-
-  const handleTimeline = (time) => {
-    setTimeline(time);
   };
 
   useEffect(() => {
@@ -299,15 +295,14 @@ const CoinPage = () => {
                 </div>
               )}
             </LinksWrapper>
-            <CoinPageTimeline
-              timeline={timeline}
-              handleTimeline={handleTimeline}
-            />
+            <CoinPageTimeline />
             <ConversionCalculator currency={currency} coinInfo={coinInfo} />
           </>
         )}
       </Container>
-      {coinInfo && <CoinPageChart coinId={coinId} currency={cur} timeline={timeline} />}
+      {coinInfo && (
+        <CoinPageChart coinId={coinId} currency={cur} timeline={timeline} />
+      )}
     </>
   );
 };
