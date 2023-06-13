@@ -5,4 +5,9 @@ import svgr from '@svgr/rollup';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), svgr()],
-})
+  server: {
+    proxy: {
+      '/search': 'http://localhost:3000'
+    }
+  }
+});
