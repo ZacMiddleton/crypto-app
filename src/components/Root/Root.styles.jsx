@@ -36,6 +36,7 @@ export const MainNav = styled.div`
 export const StyledDiv = styled.div`
   display: flex;
   height: 65%;
+  position: relative;
   form {
     flex: 1;
     height: 100%;

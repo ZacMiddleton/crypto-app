@@ -5,14 +5,15 @@ export const StyledList = styled.ul`
   position: absolute;
   width: 250px;
   z-index: 1;
-  top: 50px;
-  right: 300px;
+  top: 38px;
+  right: 200px;
   padding: 0;
   background: ${({ theme }) => theme.nav};
   list-style-type: none;
   font-size: 14px;
   display: flex;
   flex-direction: column;
+  border-radius: 0px 0px 8px 8px;
 `;
 
 export const Suggestion = styled(Link)`
@@ -36,6 +37,7 @@ export const StyledInput = styled.input`
     color: ${({theme}) => theme.text};
     border: none;
     background-color: ${({ theme }) => theme.nav};
+    font-size: 14px;
 
     &:focus {
         outline: none;

@@ -52,7 +52,6 @@ export function SearchInput() {
         value={inputValue}
         onChange={onChange}
       />
-      {error && <div>{error}</div>}
       {results.length > 0 && inputValue.length > 0 && (
         <StyledList>
           {results.map((item) => (
