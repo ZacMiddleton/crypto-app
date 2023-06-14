@@ -6,6 +6,7 @@ const port = process.env.PORT || 3000;
 
 app.get("/search", async (req, res) => {
   const { query } = req.query;
+  console.log(query);
   try {
     const { data } = await axios(
       `https://api.coingecko.com/api/v3/search?query=${query}`

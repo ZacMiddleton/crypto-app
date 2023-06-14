@@ -36,7 +36,7 @@ export const MainNav = styled.div`
 export const StyledDiv = styled.div`
   display: flex;
   height: 65%;
-  input {
+  form {
     flex: 1;
     height: 100%;
     border-radius: 8px;
@@ -49,13 +49,6 @@ export const StyledDiv = styled.div`
     background-size: 1.25em;
     border: none;
     background-color: ${({theme}) => theme.nav }
-  }
-  input:focus {
-    outline: none;
-  }
-  input::placeholder {
-    color: ${({theme}) => theme.text};
-    font-size: 12px;
   }
 `;
 
