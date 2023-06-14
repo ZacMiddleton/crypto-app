@@ -7,8 +7,11 @@ import {
   SelectionWrapper,
   InputsWrapper,
   ButtonsWrapper,
-  StyledButton
+  StyledButton,
+  StyledInput,
+  ImgWrapper
 } from "./Portfolio.styles";
+import PortfolioSearch from "../../components/PortfolioSearch";
 
 function Portfolio() {
   const dialogRef = useRef(null);
@@ -32,10 +35,11 @@ function Portfolio() {
         <DialogContainer>
           <p>Select Coins</p>
           <SelectionWrapper>
+            <ImgWrapper></ImgWrapper>
             <InputsWrapper>
-                <input type="text" placeholder="Search Coins"/>
-                <input type="text" placeholder="Purchased Amount" />
-                <div>Purchased Date</div>
+                <PortfolioSearch />
+                <StyledInput type="text" placeholder="Purchased amount" />
+                <StyledInput type="text" placeholder="Purchased date" />
             </InputsWrapper>
           </SelectionWrapper>
         </DialogContainer>

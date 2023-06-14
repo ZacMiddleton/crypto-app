@@ -1,11 +1,12 @@
 import styled from "styled-components";
 
 export const PortfolioContainer = styled.div`
-    max-width: calc(100% - 108px);
+    width: calc(100% - 108px);
     margin: 0 auto;
     background ${({theme}) => theme.primary};
     display: flex;
     justify-content: center;
+    margin: 0;
 `
 export const AssetButton = styled.button`
     background-color: #06D554;
@@ -33,7 +34,7 @@ export const AssetButton = styled.button`
 
 export const StyledDialog = styled.dialog`
     position: fixed;
-    width: 35%;
+    width: 575px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -63,11 +64,17 @@ export const DialogContainer = styled.div`
 
 export const SelectionWrapper = styled.div`
     display: flex;
+    margin: 30px 0;
 `
 
 export const InputsWrapper = styled.div`
+    position: realtvie;
     display: flex;
     flex-direction: column;
+
+    &>:last-child {
+        margin: 0;
+    }
 `
 
 export const ButtonsWrapper = styled.div`
@@ -76,11 +83,11 @@ export const ButtonsWrapper = styled.div`
 `
 
 export const StyledButton = styled.button `
-    width 25%;
+    width 144px;
     background-color: #06D554;
     padding: 10px 0;
     border: none;
-    margin: 10px;
+    margin-right: 10px;
     border-radius: 10px;
     color: ${({theme}) => theme.text};
     cursor: pointer;
@@ -93,4 +100,29 @@ export const StyledButton = styled.button `
     &:focus {
         outline: none;
     }
+`
+
+export const StyledInput = styled.input`
+  padding: 10px 60px 10px 20px;
+  background: ${({theme}) => theme.primary};
+  color: ${({theme}) => theme.text};
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  margin: 10px 0;
+  &:focus {
+    outline: none;
+  }
+
+  &::placeholder {
+    color: ${({theme}) => theme.text};
+  }
+`
+
+export const ImgWrapper = styled.div`
+    height: 128px;
+    width: 128px;
+    background: ${({theme}) => theme.primary};
+    border-radius: 10px;
+    margin-right: 30px;
 `
