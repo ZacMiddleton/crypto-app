@@ -2,7 +2,9 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { StyledList, Suggestion, StyledInput } from "./SearchInput.styles";
-import _ from "lodash";
+import { useMemo } from "react";
+import debounce from "lodash/debounce";
+import { useEffect } from "react";
 
 export function SearchInput() {
   const [inputValue, setInputValue] = useState("");
@@ -10,17 +12,37 @@ export function SearchInput() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const handleSearch = _.debounce(async (value) => {
+  const handleSearch = async (value) => {
     try {
-      const response = await axios.get(
-        `https://api.coingecko.com/api/v3/search?query=${encodeURIComponent(value)}`
+      const { data } = await axios(
+        `https://api.coingecko.com/api/v3/search?query=${encodeURIComponent(
+          value
+        )}`
       );
-      const coins = data.coins
-      setResults(response.data);
+      const coins = data?.coins
+        .filter(
+          (el) =>
+            el.id.startsWith(value) ||
+            el.name.startsWith(value) ||
+            el.symbol.startsWith(value)
+        )
+        .slice(0, 10);
+      setResults(coins);
     } catch (err) {
       setError("An error occurred while searching");
     }
-  }, 1000);
+  };
+
+  const debouncedChangeHandler = useMemo(
+    () => debounce(handleSearch, 500),
+    []
+  );
+
+  useEffect(() => {
+    return () => {
+      debouncedChangeHandler.cancel();
+    };
+  }, [debouncedChangeHandler]);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -35,7 +57,7 @@ export function SearchInput() {
     if (e.target.value.length < 0) {
       setResults("");
     } else {
-      handleSearch(e.target.value);
+      debouncedChangeHandler(e.target.value);
     }
     setInputValue(e.target.value);
   };
