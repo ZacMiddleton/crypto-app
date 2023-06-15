@@ -25,7 +25,7 @@ import {
 } from "./CoinPage.styles";
 import { useEffect, useState } from "react";
 import { getPageData } from "/src/utils/CoinGecko";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { LinkIcon, StackIcon, CopiedCheck } from "/src/assets/ThemeIcons";
 import { currencySymbol } from "/src/utils/ChartFunctions";
 import CoinPageChart from "/src/components/CoinPageChart";
@@ -38,6 +38,7 @@ const CoinPage = () => {
   const [isCopied, setIsCopied] = useState(false);
   const [timeline, setTimeline] = useState("180");
   const { coinId } = useParams();
+  let location = useLocation()
 
   function formatDate(dateString) {
     const date = new Date(dateString);
@@ -62,6 +63,10 @@ const CoinPage = () => {
   useEffect(() => {
     getPageData(handleInfo, coinId);
   }, []);
+
+  useEffect(() => {
+    getPageData(handleInfo, coinId)
+  }, [location]);
 
   const { image, name, symbol, links, market_data, description } =
     coinInfo ?? {};

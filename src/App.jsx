@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   createBrowserRouter,
@@ -17,7 +17,6 @@ import { AppContainer, Wrapper } from "./App.Styles";
 import { getCoinData } from "./store/coinData/actions";
 
 function App() {
-  const [coinInfo, setCoinInfo] = useState(null);
   const dispatch = useDispatch();
   const theme = useSelector((state) => state.theme);
   const currency = useSelector((state) => state.currency);
