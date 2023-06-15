@@ -12,10 +12,17 @@ export function SearchInput() {
 
   const handleSearch = _.debounce(async (value) => {
     try {
-      const response = await axios.get(
-        `/search?query=${encodeURIComponent(value)}`
+      const { data } = await axios(
+        `https://api.coingecko.com/api/v3/search?query=${encodeURIComponent(value)}`
       );
-      setResults(response.data);
+      const coins = data?.coins.filter(
+        (el) =>
+          el.id.startsWith(value) ||
+          el.name.startsWith(value) ||
+          el.symbol.startsWith(value)
+      )
+      .slice(0, 10);
+      setResults(coins);
     } catch (err) {
       setError("An error occurred while searching");
     }
