@@ -125,4 +125,11 @@ export const ImgWrapper = styled.div`
     background: ${({theme}) => theme.primary};
     border-radius: 10px;
     margin-right: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        height: 85px;
+    }
 `

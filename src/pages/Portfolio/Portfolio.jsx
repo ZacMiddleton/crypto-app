@@ -12,9 +12,11 @@ import {
   ImgWrapper
 } from "./Portfolio.styles";
 import PortfolioSearch from "../../components/PortfolioSearch";
+import { useSelector } from "react-redux";
 
 function Portfolio() {
   const dialogRef = useRef(null);
+  const modalImg = useSelector((state) => state.modalImg);
 
   const handleClickOpen = () => {
     if (dialogRef.current) {
@@ -35,7 +37,9 @@ function Portfolio() {
         <DialogContainer>
           <p>Select Coins</p>
           <SelectionWrapper>
-            <ImgWrapper></ImgWrapper>
+            <ImgWrapper>
+              <img src={modalImg} alt="" />
+            </ImgWrapper>
             <InputsWrapper>
                 <PortfolioSearch />
                 <StyledInput type="text" placeholder="Purchased amount" />

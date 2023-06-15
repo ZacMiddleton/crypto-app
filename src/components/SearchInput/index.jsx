@@ -13,8 +13,9 @@ export function SearchInput() {
   const handleSearch = _.debounce(async (value) => {
     try {
       const response = await axios.get(
-        `/search?query=${encodeURIComponent(value)}`
+        `https://api.coingecko.com/api/v3/search?query=${encodeURIComponent(value)}`
       );
+      const coins = data.coins
       setResults(response.data);
     } catch (err) {
       setError("An error occurred while searching");
