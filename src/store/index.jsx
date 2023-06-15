@@ -8,11 +8,12 @@ import currency from './currency/currencyReducer';
 import coinData from './coinData';
 import btcChartData from './btcChartData';
 import coinPageTimeline from './coinPageTimeline';
+import modalImg from './modalImg';
 
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['theme', 'currency'],
+    whitelist: ['theme', 'currency', 'modalImg'],
 }
 
 const reducers = combineReducers({
@@ -20,7 +21,8 @@ const reducers = combineReducers({
   currency,
   coinData,
   btcChartData,
-  coinPageTimeline
+  coinPageTimeline,
+  modalImg,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
