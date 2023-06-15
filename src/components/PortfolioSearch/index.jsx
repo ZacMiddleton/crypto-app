@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { useState } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useDispatch } from 'react-redux';
-import _ from "lodash";
+import debounce from "lodash/debounce";
 import { StyledList, Suggestion, StyledInput } from './PortfolioSearch.styles';
 import { useLocalStorage } from '../../utils/hooks';
 import { setModalImg } from '../../store/modalImg/actions';
@@ -14,29 +14,43 @@ const PortfolioSearch = () => {
   const [results, setResults] = useState("");
   const [savedCoin, setSavedCoin] = useState(null);
 
-  const handleSearch = _.debounce(async (value) => {
+  const handleSearch = async (value) => {
     try {
       const { data } = await axios(
-        `https://api.coingecko.com/api/v3/search?query=${encodeURIComponent(value)}`
+        `https://api.coingecko.com/api/v3/search?query=${encodeURIComponent(
+          value
+        )}`
       );
-      const coins = data?.coins.filter(
-        (el) =>
-          el.id.startsWith(value) ||
-          el.name.startsWith(value) ||
-          el.symbol.startsWith(value)
-      )
-      .slice(0, 10);
+      const coins = data?.coins
+        .filter(
+          (el) =>
+            el.id.startsWith(value) ||
+            el.name.startsWith(value) ||
+            el.symbol.startsWith(value)
+        )
+        .slice(0, 10);
       setResults(coins);
     } catch (err) {
       setError("An error occurred while searching");
     }
-  }, 1000);
+  };
+
+  const debouncedChangeHandler = useMemo(
+    () => debounce(handleSearch, 500),
+    []
+  );
+
+  useEffect(() => {
+    return () => {
+      debouncedChangeHandler.cancel();
+    };
+  }, [debouncedChangeHandler]);
 
   const onChange = (e) => {
     if (e.target.value.length < 0) {
       setResults("");
     } else {
-      handleSearch(e.target.value);
+      debouncedChangeHandler(e.target.value);
     }
     setInputValue(e.target.value);
   };
