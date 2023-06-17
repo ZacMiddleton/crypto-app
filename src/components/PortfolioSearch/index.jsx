@@ -59,7 +59,7 @@ const PortfolioSearch = () => {
     e.preventDefault();
     if (inputValue.length > 0 && results.length > 0) {
       const coin = results[0]
-      setInputValue(`${coin.id}`);
+      setInputValue(`${coin.name}`);
       dispatch(setModalImg(coin.large));
       setSavedCoin(coin);
     }
