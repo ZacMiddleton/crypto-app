@@ -6,7 +6,7 @@ export const PortfolioContainer = styled.div`
     background ${({theme}) => theme.primary};
     display: flex;
     justify-content: center;
-    margin: 0;
+    margin: 0 auto;
 `
 export const AssetButton = styled.button`
     background-color: #06D554;
